@@ -111,6 +111,7 @@ X-Session-Hash: <hash>
 **Respuesta**:
 
 ```json
+<<<<<<< Updated upstream
 {
   "segments": [
     { /* 16 objetos de segmento */ }
@@ -149,6 +150,9 @@ X-Session-Hash: <hash>
     "cached": false,
     "audio_hash": "a1"
 }
+=======
+{"type":"segment","data":{"id":1,"start":"00:00:00,000","end":"00:00:03,500","speaker":"Juan Pérez","text":"Buenos días, mi nombre es Juan Pérez y soy el fiscal del caso."},"timestamp":"2025-08-01T18:22:34.714Z"}
+>>>>>>> Stashed changes
 ```
 
 ### WebSocket
