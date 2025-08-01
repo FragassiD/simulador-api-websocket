@@ -72,25 +72,10 @@ X-Session-Hash: <hash>
 
 **URL**: `ws://localhost:4000/chat/<hash>`
 
-1. Conéctate desde tu cliente, por ejemplo:
-
-   ```js
-   const socket = new WebSocket('ws://localhost:4000/chat/donadonadonadona');
-   ```
-2. Al abrirse la conexión, envía mensajes:
-
-   ```js
-   socket.send(JSON.stringify({ text: 'Hola', hash: 'donadonadonadona' }));
-   ```
-3. Para recibir respuestas:
-
-   ```js
-   socket.onmessage = e => console.log(JSON.parse(e.data).reply);
-   ```
 
 ### Comandos en consola
 
-En la terminal donde corre el servidor, puedes:
+En la terminal donde corre el servidor, podes:
 
 * `/send <hash> <mensaje>` → Enviar `<mensaje>` como respuesta JSON a ese cliente WebSocket.
 * Cualquier texto sin `/send` → Difundir (broadcast) a todos los clientes.
@@ -170,30 +155,6 @@ X-Session-Hash: <hash>
 
 **URL**: `ws://localhost:5000/transcription/<hash>`
 
-1. Conéctate desde tu cliente:
-
-   ```js
-   const socket = new WebSocket('ws://localhost:5000/transcription/donadonadonadona');
-   ```
-2. Al abrirse la conexión, envía autenticación:
-
-   ```js
-   socket.send(JSON.stringify({ type: 'auth', hash: 'donadonadonadona' }));
-   ```
-3. Para manejar los mensajes entrantes:
-
-   ```ts
-   interface WSMsg {
-     type: 'segment' | 'segments';
-     data: Segment | Segment[];
-     timestamp: string;
-   }
-   socket.onmessage = e => {
-     const msg: WSMsg = JSON.parse(e.data);
-     if (msg.type === 'segment') handleSegment(msg.data);
-     else msg.data.forEach(handleSegment);
-   };
-   ```
 
 ### Comandos en consola
 
