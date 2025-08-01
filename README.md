@@ -135,7 +135,7 @@ X-Session-Hash: <hash>
   "audio_hash": "a1b2c3d4e5f6..."
 } ```
 
-```json
+{
     "segments": [
       {
         "id": 1,
@@ -162,7 +162,8 @@ X-Session-Hash: <hash>
     ],
     "final_transcription_path": "/transcriptions/caso_2024-001_final.srt",
     "cached": false,
-    "audio_hash": "a1" 
+    "audio_hash": "a1"
+}
 ```
 
 ### WebSocket
