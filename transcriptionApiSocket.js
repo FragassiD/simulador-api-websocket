@@ -27,10 +27,7 @@ const transcriptionResponse = {
     { id: 14, start: "00:01:08,100", end: "00:01:14,800", speaker: "Detective Rodriguez", text: "Sí, mi compañero detective Smith y el fotógrafo forense estaban presentes." },
     { id: 15, start: "00:01:14,800", end: "00:01:20,500", speaker: "Juez Martinez", text: "¿El documento fue fotografiado in situ antes de ser removido?" },
     { id: 16, start: "00:01:20,500", end: "00:01:26,200", speaker: "Detective Rodriguez", text: "Correcto, su señoría. Tenemos fotografías completas de la escena." }
-  ],
-  final_transcription_path: "/transcriptions/caso_2024-001_final.srt",
-  cached: false,
-  audio_hash: "a1b2c3d4e5f6..."
+  ]
 };
 
 // ——— Middleware ———
