@@ -111,48 +111,14 @@ X-Session-Hash: <hash>
 **Respuesta**:
 
 ```json
-<<<<<<< Updated upstream
-{
-  "segments": [
-    { /* 16 objetos de segmento */ }
-  ],
-  "final_transcription_path": "/transcriptions/caso_2024-001_final.srt",
-  "cached": false,
-  "audio_hash": "a1b2c3d4e5f6..."
-} 
-
-{
-    "segments": [
-      {
-        "id": 1,
-        "start": "00:00:00,000",
-        "end": "00:00:03,500",
-        "speaker": "Juan Pérez",
-        "text": "Buenos días, mi nombre es Juan Pérez y soy el fiscal del caso."
-      },
-      {
-        "id": 2,
-        "start": "00:00:03,500",
-        "end": "00:00:07,200",
-        "speaker": "María González",
-        "text": "Muchas gracias, fiscal. Soy María González, defensora pública."
-      },
-      {
-        "id": 3,
-        "start": "00:00:07,200",
-        "end": "00:00:12,800",
-        "speaker": "Juan Pérez",
-        "text": "Procederemos con la presentación de las evidencias del caso número 2024-001."
-      }
-     
-    ],
-    "final_transcription_path": "/transcriptions/caso_2024-001_final.srt",
-    "cached": false,
-    "audio_hash": "a1"
-}
-=======
-{"type":"segment","data":{"id":1,"start":"00:00:00,000","end":"00:00:03,500","speaker":"Juan Pérez","text":"Buenos días, mi nombre es Juan Pérez y soy el fiscal del caso."},"timestamp":"2025-08-01T18:22:34.714Z"}
->>>>>>> Stashed changes
+{"type":"segment",
+"data":
+   {"id":1,
+   "start":"00:00:00,000",
+   "end":"00:00:03,500",
+   "speaker":"Juan Pérez",
+   "text":"Buenos días, mi nombre es Juan Pérez y soy el fiscal del caso."},
+"timestamp":"2025-08-01T18:22:34.714Z"}
 ```
 
 ### WebSocket
