@@ -2,8 +2,8 @@
 
 Este repositorio contiene dos mocks de servidor en Node.js:
 
-1. **Servidor de Chat** (`server.js`)
-2. **Servidor de Transcripción** (`server-transcription.js`)
+1. **Servidor de Chat** (`chatApiSocket.js`)
+2. **Servidor de Transcripción** (`transcriptionApiSocket.js`)
 
 Ambos servidores exponen:
 
