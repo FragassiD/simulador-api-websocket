@@ -133,7 +133,7 @@ X-Session-Hash: <hash>
   "final_transcription_path": "/transcriptions/caso_2024-001_final.srt",
   "cached": false,
   "audio_hash": "a1b2c3d4e5f6..."
-} ```
+} 
 
 {
     "segments": [
