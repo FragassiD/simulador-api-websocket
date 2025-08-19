@@ -42,6 +42,54 @@ const summarizeResponse = {
 const chatResponse = {
   reply: "Fernando Sabag Montiel es el hombre que intentó asesinar a la entonces vicepresidenta Cristina Fernández de Kirchner el 1° de septiembre de 2022 en Recoleta, cuando gatilló un arma Bersa a pocos centímetros de su cabeza, pero el disparo no salió. Fue acusado como autor material de homicidio doblemente calificado en grado de tentativa, agravado por el uso de arma de fuego, además de portación y receptación de arma de guerra ilegal. El juicio oral comenzó el 26 de junio de 2024 y en su declaración reconoció que quería matarla, alegando que su motivo era personal y no político. Durante los allanamientos posteriores se encontró en una tarjeta de memoria 17 fotos y 102 videos de explotación sexual infantil, así como evidencia de que había enviado material por redes sociales. Esto derivó en una causa paralela en la que, mediante juicio abreviado, fue condenado el 13 de mayo de 2025 a cuatro años y tres meses de prisión efectiva, unificando esa pena con una anterior de un año en suspenso por tenencia de DNI ajeno. La investigación del atentado tuvo un revés cuando falló el peritaje de su celular, que se formateó durante los intentos de extracción de datos, imposibilitando acceder a información que podría haber ampliado las pruebas.",
 };
+
+// Respuesta de análisis de emociones
+const emotionsResponse = {
+  success: true,
+  data: {
+    id: "656265cbe0d81f3a7ee2a483c42c45b2d4e3de31c5c049640a5c2c24cd532c88",
+    orador_detectado: "Julian Lopez",
+    precision: 25,
+    emociones: [
+      {
+        tipo: "Enojo",
+        porcentaje: 62,
+        color: "#ff6b6b",
+        descripcion: "Emoción dominante detectada en el discurso"
+      },
+      {
+        tipo: "Felicidad",
+        porcentaje: 29,
+        color: "#ffd93d",
+        descripcion: "Segunda emoción más presente"
+      },
+      {
+        tipo: "Neutral",
+        porcentaje: 7,
+        color: "#6bcf7f",
+        descripcion: "Tono neutro en ciertas partes"
+      },
+      {
+        tipo: "Miedo",
+        porcentaje: 1,
+        color: "#ff9f43",
+        descripcion: "Emoción mínima detectada"
+      },
+      {
+        tipo: "Tristeza",
+        porcentaje: 1,
+        color: "#74c0fc",
+        descripcion: "Emoción mínima detectada"
+      }
+    ],
+    fecha_analisis: "2024-08-14T10:30:00Z",
+    duracion_audio: 180,
+    confianza_general: 85,
+    cached: false
+  },
+  message: "Análisis de emociones completado exitosamente",
+  cached: false
+};
 // Respuesta de preguntas
 const questionsResponse = {
   questions: [
@@ -104,6 +152,13 @@ app.post('/api/suggestions', (req, res) => {
   res.json(questionsResponse);
 });
 
+// API de Análisis de Emociones
+app.post('/api/emotions', (req, res) => {
+  const { hash } = req.body;
+  console.log(`[API] POST emotions for hash="${hash}"`);
+  res.json(emotionsResponse);
+});
+
 // ——— HTTP + WebSocket Server ———
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ noServer: true });
@@ -136,7 +191,7 @@ wss.on('connection', (ws, request) => {
 server.on('upgrade', (req, socket, head) => {
   // Permitir rutas del tipo /{type}/${hash}
   const pathParts = req.url.split('/');
-  const validTypes = ['chat', 'transcription', 'summary', 'questions'];
+  const validTypes = ['chat', 'transcription', 'summary', 'questions', 'emotions'];
   
   if (pathParts.length >= 3 && validTypes.includes(pathParts[1])) {
     wss.handleUpgrade(req, socket, head, (ws) => wss.emit('connection', ws, req));
@@ -152,11 +207,13 @@ server.listen(PORT, () => {
   console.log('  POST /api/transcription'); 
   console.log('  POST /api/summarize');
   console.log('  POST /api/questions');
+  console.log('  POST /api/emotions');
   console.log('WebSocket routes:');
   console.log('  /chat/{hash}');
   console.log('  /transcription/{hash}');
   console.log('  /summary/{hash}');
   console.log('  /questions/{hash}');
+  console.log('  /emotions/{hash}');
 });
 
 // ——— Consola interactiva ———
@@ -168,6 +225,7 @@ console.log('  /trans-lot <hash>             → todos los segmentos');
 console.log('  /summary-send <hash>          → resumen completo');
 console.log('  /summary-chunk <hash>         → resumen por chunks');
 console.log('  /questions <hash>             → todas las preguntas');
+console.log('  /emotions <hash>              → análisis de emociones');
 console.log('  exit                          → stop');
 rl.prompt();
 
@@ -281,6 +339,21 @@ rl.on('line', line => {
         timestamp: new Date().toISOString() 
       }));
       console.log(`→ Sent ${questionsResponse.questions.length} questions`);
+    }
+    return rl.prompt();
+  }
+
+  // /emotions
+  m = input.match(/^\/emotions\s+(\S+)$/);
+  if (m) {
+    const session = sessions.get(`emotions_${m[1]}`);
+    if (session?.ws?.readyState === WebSocket.OPEN) {
+      session.ws.send(JSON.stringify({ 
+        type: 'emotions', 
+        data: emotionsResponse, 
+        timestamp: new Date().toISOString() 
+      }));
+      console.log(`→ Sent emotions analysis`);
     }
     return rl.prompt();
   }
